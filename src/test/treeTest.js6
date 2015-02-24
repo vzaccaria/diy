@@ -1,0 +1,35 @@
+"use strict";
+
+var { parse }      = require('../tree')
+var webPack        = require('../packs/web')
+var { transcript } = require('../backends/make')
+
+
+
+var f = parse(_ => {
+    _.addPack(webPack)
+    _.collect("all", _ => {
+            _.mirrorTo("./lib", {
+                strip: 'src/'
+            }, _ => {
+                        _.collect("build", _ => {
+                            _.minify(_ => {
+                                _.livescript("src/*.ls")
+                                _.livescript("src/packs/*.ls")
+                                _.livescript("src/backends/*.ls")
+                                _.sixToFive("src/*.js6")
+                            })
+
+                        })
+                    })
+
+            _.toFile("./index.js", _ => {
+                _.minify(_ => {
+                    _.livescript("src/index.ls")
+                })
+            })
+    })
+})
+
+transcript(f);
+

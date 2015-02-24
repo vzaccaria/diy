@@ -1,0 +1,28 @@
+{
+  "name": "diy",
+  "version": "1.0.0",
+  "description": "do it yourself - build DSL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vzaccaria/dyi.git"
+  },
+  "author": "Vittorio Zaccaria",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/vzaccaria/dyi/issues"
+  },
+  "homepage": "https://github.com/vzaccaria/dyi",
+  "dependencies": {
+    "debug": "^2.1.1",
+    "glob": "^4.4.0",
+    "lodash": "^3.3.0",
+    "moment": "^2.9.0",
+    "tree-model": "^0.4.3",
+    "uid": "0.0.2",
+    "xcode": "^0.6.7"
+  }
+}
