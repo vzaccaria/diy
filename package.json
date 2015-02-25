@@ -17,10 +17,14 @@
   },
   "homepage": "https://github.com/vzaccaria/dyi",
   "dependencies": {
+    "bluebird": "^2.9.12",
     "debug": "^2.1.1",
+    "diff-files": "^0.1.0",
     "glob": "^4.4.0",
+    "liquid-node": "^2.4.0",
     "lodash": "^3.3.0",
     "moment": "^2.9.0",
+    "rewire": "^2.3.1",
     "tree-model": "^0.4.3",
     "uid": "0.0.2",
     "xcode": "^0.6.7"

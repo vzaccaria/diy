@@ -11,3 +11,5 @@ lib/backends/make.js
 lib/file.js
 lib/index.js
 lib/packs/web.js
+lib
+tests/darwin/test0/output

@@ -163,11 +163,10 @@ class treeBuilder
         @curNode = @createTree(body)
         _.extend(@curNode.model, { targetName: "root", type: "root" })
         @root = @curNode
-        @createTargetStore!
-        return @frame
+        return @createTargetStore!
 
     createTargetStore: ~>
-        @frame = new targetStore()
+        iTargetStore = new targetStore()
         targets = _.uniq(processNodes(@root), (.name))
         dirs = forAllProducts(targets, ensureDirectoryExists)
 
@@ -179,9 +178,9 @@ class treeBuilder
             actions: actions
         })
         targets = targets ++ dirs ++ [ prepare ] ++ [ clean ]
-        _.map targets, @frame.addTarget
+        _.map targets, iTargetStore.addTarget
 
-        return @frame
+        return iTargetStore 
 
     addPack: (pack) ~>
         for k,v of pack
