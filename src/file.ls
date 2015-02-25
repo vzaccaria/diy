@@ -1,7 +1,8 @@
 _      = require('lodash')
 debug  = require('debug')('file')
 assert = require('assert')
-path = require('path')
+path   = require('path')
+moment = require('moment')
 
 class target 
     (@name, @depNames) ~>
@@ -64,6 +65,41 @@ class targetStore
             throw "Sorry, #tname is not a construction target"
         else 
             @_targets[tName].command
+
+    getMeta: (options) ~>
+        options ?= {}
+        options.default-goal ?= 'all'
+
+        meta = {
+            options: options
+            data: 
+                phonyTargets: []
+                phonySequentialTargets: []
+                targets: []
+        }
+
+        for k in @getPhonyTargetNames!
+            if not @isPhonyTargetSequential(k)
+                meta.data.phonyTargets.push {
+                    name: k
+                    dependencies: @getTargetDepsAsNames(k)
+                }
+            else 
+                meta.data.phonySequentialTargets.push {
+                    name: k
+                    dependencies: @getTargetDepsAsNames(k)
+                    actions: @getPhonyTargetActions(k)
+                }
+
+        for k in @getActualTargetNames!
+            meta.data.targets.push {
+                name: k
+                dependencies: @getTargetDepsAsNames(k)
+                command: @getTargetCreationCommand(k)
+            }
+            
+        return meta
+
 
 
 module.exports = { product, phony, targetStore }

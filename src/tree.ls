@@ -165,14 +165,18 @@ class treeBuilder
         @root = @curNode
         return @createTargetStore!
 
+    
+
     createTargetStore: ~>
         iTargetStore = new targetStore()
         targets = _.uniq(processNodes(@root), (.name))
         dirs = forAllProducts(targets, ensureDirectoryExists)
 
-        prepare = new phony("prepare", _.map(dirs, (.name)), {} )    
+        prepare = new phony("prepare", _.map(dirs, (.name)), {} )  
+
         actions = forAllProducts targets, ->
                     "rm -f #{it.name}"
+
         clean = new phony("clean", [] , {
             sequential: true
             actions: actions

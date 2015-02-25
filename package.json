@@ -4,7 +4,7 @@
   "description": "do it yourself - build DSL",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./tests/test.sh"
   },
   "repository": {
     "type": "git",
