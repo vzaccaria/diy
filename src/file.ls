@@ -40,6 +40,9 @@ class targetStore
     addTarget: (target) ~>
         @_targets[target.name] = target
 
+    addSources: (sources) ~>
+        @_sources = sources
+
     getPhonyTargetNames: ~>
         _.keys(_.omit @_targets, (.constructor.name != 'phony')) # on values
 
@@ -76,6 +79,7 @@ class targetStore
                 phonyTargets: []
                 phonySequentialTargets: []
                 targets: []
+                sources: @_sources
         }
 
         for k in @getPhonyTargetNames!

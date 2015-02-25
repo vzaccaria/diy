@@ -22,7 +22,7 @@ createBuildTarget = (node, source) ->
 
 processCompileNode = (node) ->
     let @=node.model
-        buildTargets = _.map _.flatten(@sources), (source) ->
+        buildTargets = _.map _.flattenDeep(@sources), (source) ->
             createBuildTarget(node, source)
 
         @products = _.map(buildTargets, (.name))
@@ -32,22 +32,22 @@ processCompileNode = (node) ->
 
 processPostProcessNode = (node) ->
     let @=node.model
-        @sources    = _.flatten(@children.map (.products))
+        @sources    = _.flattenDeep(@children.map (.products))
         return processCompileNode(node)
 
 
 processReduceNode = (node) ->
     let @=node.model
         debug "reduceNode name", @
-        @deps       = _.flatten(@children.map (.products))
+        @deps       = _.flattenDeep(@children.map (.products))
         return processPostProcessNode(node)
 
 
 processCollectNode = (node) ->
     let @=node.model
         debug "CollectNode name", @
-        @deps     = _.flatten(@children.map (.targetName))
-        @products = _.flatten(@children.map (.products))
+        @deps     = _.flattenDeep(@children.map (.targetName))
+        @products = _.flattenDeep(@children.map (.products))
         return (new phony(@targetName, @deps, @options))
 
 executeCommand = (tName, c) ->
@@ -80,10 +80,17 @@ mapNodes = (r, f) ->
 
 processNodes = (r) ->
     nodeList = mapNodes(r, processNode)
-    return _.flatten(nodeList)
+    return _.flattenDeep(nodeList)
 
 forAllProducts = (l, f) ->
     _.map(_.filter(l, (.constructor.name == 'product')), f)
+
+getSources = (r) ->
+    cNodes = mapNodes(r, _.identity)
+    cNodes = _.filter(cNodes, (.model.type == 'compile'))
+    sources = _.map cNodes, (.model.sources)
+    return _.filter(_.uniq(_.flattenDeep(sources)))
+    
 
 ensureDirectoryExists = (p) ->
     new product(path.dirname(p.name), [], "mkdir -p #{path.dirname(p.name)}", [])
@@ -165,12 +172,13 @@ class treeBuilder
         @root = @curNode
         return @createTargetStore!
 
-    
+
 
     createTargetStore: ~>
         iTargetStore = new targetStore()
-        targets = _.uniq(processNodes(@root), (.name))
-        dirs = forAllProducts(targets, ensureDirectoryExists)
+        targets      = _.uniq(processNodes(@root), (.name))
+        dirs         = forAllProducts(targets, ensureDirectoryExists)
+        iTargetStore.addSources getSources(@root)
 
         prepare = new phony("prepare", _.map(dirs, (.name)), {} )  
 
@@ -183,6 +191,7 @@ class treeBuilder
         })
         targets = targets ++ dirs ++ [ prepare ] ++ [ clean ]
         _.map targets, iTargetStore.addTarget
+
 
         return iTargetStore 
 

@@ -14,17 +14,18 @@ parse ->
     @collect "build", ->
         @command-seq -> [
             @toDir "./lib", { strip: "src" }, -> [
-                @es6 "src/test/*.js6"
-                @lsc "src/*.ls"
-                @lsc "src/packs/*.ls"
-                @lsc "src/backends/*.ls"
+                @es6 "src/**/*.js6"
+                @lsc "src/**/*.ls"
             ]
             @cmd "cp ./lib/index.js ."
         ]
 
     @collect "all", -> 
         @command-seq -> [
-            @remove-all-targets()
             @make \build
         ]
 
+    @collect "clean", -> [
+        @command-seq -> 
+            @remove-all-targets()
+    ]
