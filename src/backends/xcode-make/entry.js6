@@ -2,22 +2,22 @@ var debug = require('debug')('entry')
 
 var {
     readTemplate
-} = require('./readTemplate.es5.js')
+} = require('./readTemplate.js')
 
 var {
     fillWithData
-} = require('./parseWithData.es5.js')
+} = require('./parseWithData.js')
 
 var {
     writeProject 
-} = require('./writeProject.es5.js')
+} = require('./writeProject.js')
 
 
 var _module = () => {
 
     var writeXcode = (data) => {
         var template = readTemplate();
-        fillWithData(template, data).then((project) => {
+        return fillWithData(template, data).then((project) => {
             writeProject(project)
         })
     }

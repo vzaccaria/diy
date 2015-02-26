@@ -15,6 +15,8 @@ _module = ->
 
     iface = { 
 
+        fillWithData: fillWithData
+
         transcript: (f, options) ->
             fillWithData(f.getMeta(options)).then ->
                 console.log it

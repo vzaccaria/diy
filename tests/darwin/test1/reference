@@ -1,0 +1,246 @@
+{
+    "options": {
+        "productName": "Product",
+        "authorName": "Anonymous",
+        "defaultGoal": "all"
+    },
+    "data": {
+        "phonyTargets": [
+            {
+                "name": "c-1",
+                "dependencies": [
+                    "src/a.js",
+                    "src/index.js"
+                ]
+            },
+            {
+                "name": "c-2",
+                "dependencies": [
+                    "src/packs/b.js"
+                ]
+            },
+            {
+                "name": "c-3",
+                "dependencies": [
+                    "src/backends/c.js"
+                ]
+            },
+            {
+                "name": "c-4",
+                "dependencies": []
+            },
+            {
+                "name": "p-5",
+                "dependencies": [
+                    "minified-10.js",
+                    "minified-11.js",
+                    "minified-12.js",
+                    "minified-13.js"
+                ]
+            },
+            {
+                "name": "build",
+                "dependencies": [
+                    "p-5"
+                ]
+            },
+            {
+                "name": "m-6",
+                "dependencies": [
+                    "lib/minified-10.js",
+                    "lib/minified-11.js",
+                    "lib/minified-12.js",
+                    "lib/minified-13.js"
+                ]
+            },
+            {
+                "name": "c-7",
+                "dependencies": [
+                    "src/index.js"
+                ]
+            },
+            {
+                "name": "p-8",
+                "dependencies": [
+                    "minified-14.js"
+                ]
+            },
+            {
+                "name": "r-9",
+                "dependencies": [
+                    "index.js"
+                ]
+            },
+            {
+                "name": "all",
+                "dependencies": [
+                    "m-6",
+                    "r-9"
+                ]
+            },
+            {
+                "name": "prepare",
+                "dependencies": [
+                    "src",
+                    "src/packs",
+                    "src/backends",
+                    ".",
+                    "lib"
+                ]
+            }
+        ],
+        "phonySequentialTargets": [
+            {
+                "name": "clean",
+                "dependencies": [],
+                "actions": [
+                    "rm -f src/a.js",
+                    "rm -f src/index.js",
+                    "rm -f src/packs/b.js",
+                    "rm -f src/backends/c.js",
+                    "rm -f minified-10.js",
+                    "rm -f minified-11.js",
+                    "rm -f minified-12.js",
+                    "rm -f minified-13.js",
+                    "rm -f lib/minified-10.js",
+                    "rm -f lib/minified-11.js",
+                    "rm -f lib/minified-12.js",
+                    "rm -f lib/minified-13.js",
+                    "rm -f minified-14.js",
+                    "rm -f index.js"
+                ]
+            }
+        ],
+        "targets": [
+            {
+                "name": "src/a.js",
+                "dependencies": [
+                    "src/a.ls"
+                ],
+                "command": "lsc -c src/a.ls"
+            },
+            {
+                "name": "src/index.js",
+                "dependencies": [
+                    "src/index.ls"
+                ],
+                "command": "lsc -c src/index.ls"
+            },
+            {
+                "name": "src/packs/b.js",
+                "dependencies": [
+                    "src/packs/b.ls"
+                ],
+                "command": "lsc -c src/packs/b.ls"
+            },
+            {
+                "name": "src/backends/c.js",
+                "dependencies": [
+                    "src/backends/c.ls"
+                ],
+                "command": "lsc -c src/backends/c.ls"
+            },
+            {
+                "name": "minified-10.js",
+                "dependencies": [
+                    "src/a.js"
+                ],
+                "command": "uglifyjs src/a.js > minified-10.js"
+            },
+            {
+                "name": "minified-11.js",
+                "dependencies": [
+                    "src/index.js"
+                ],
+                "command": "uglifyjs src/index.js > minified-11.js"
+            },
+            {
+                "name": "minified-12.js",
+                "dependencies": [
+                    "src/packs/b.js"
+                ],
+                "command": "uglifyjs src/packs/b.js > minified-12.js"
+            },
+            {
+                "name": "minified-13.js",
+                "dependencies": [
+                    "src/backends/c.js"
+                ],
+                "command": "uglifyjs src/backends/c.js > minified-13.js"
+            },
+            {
+                "name": "lib/minified-10.js",
+                "dependencies": [
+                    "minified-10.js"
+                ],
+                "command": "cp minified-10.js ./lib/minified-10.js"
+            },
+            {
+                "name": "lib/minified-11.js",
+                "dependencies": [
+                    "minified-11.js"
+                ],
+                "command": "cp minified-11.js ./lib/minified-11.js"
+            },
+            {
+                "name": "lib/minified-12.js",
+                "dependencies": [
+                    "minified-12.js"
+                ],
+                "command": "cp minified-12.js ./lib/minified-12.js"
+            },
+            {
+                "name": "lib/minified-13.js",
+                "dependencies": [
+                    "minified-13.js"
+                ],
+                "command": "cp minified-13.js ./lib/minified-13.js"
+            },
+            {
+                "name": "minified-14.js",
+                "dependencies": [
+                    "src/index.js"
+                ],
+                "command": "uglifyjs src/index.js > minified-14.js"
+            },
+            {
+                "name": "index.js",
+                "dependencies": [
+                    "minified-14.js"
+                ],
+                "command": "cp minified-14.js ./index.js"
+            },
+            {
+                "name": "src",
+                "dependencies": [],
+                "command": "mkdir -p src"
+            },
+            {
+                "name": "src/packs",
+                "dependencies": [],
+                "command": "mkdir -p src/packs"
+            },
+            {
+                "name": "src/backends",
+                "dependencies": [],
+                "command": "mkdir -p src/backends"
+            },
+            {
+                "name": ".",
+                "dependencies": [],
+                "command": "mkdir -p ."
+            },
+            {
+                "name": "lib",
+                "dependencies": [],
+                "command": "mkdir -p lib"
+            }
+        ],
+        "sources": [
+            "src/a.ls",
+            "src/index.ls",
+            "src/packs/b.ls",
+            "src/backends/c.ls"
+        ]
+    }
+}

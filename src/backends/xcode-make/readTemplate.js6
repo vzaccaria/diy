@@ -1,6 +1,5 @@
 
 var { cat, mkdir } = require('shelljs')
-var { project }    = require('xcode')
 var { log }        = console
 var debug = require('debug')('readTemplate')
 
@@ -8,12 +7,11 @@ var _module = () => {
 
     
     var readTemplate = () => {
-        debug("Reading " + __dirname + "/../template/MyProduct/MyProduct.xcodeproj/project.pbxproj")
-        var curProjectPbx = cat(__dirname + "/../template/MyProduct/MyProduct.xcodeproj/project.pbxproj")
+    	var tt = `${__dirname}/../../../src/backends/xcode-make/template/MyProduct/MyProduct.xcodeproj/project.pbxproj`
+        var curProjectPbx = cat(tt)
         return curProjectPbx;
     }
 
-   
 
     return {
         readTemplate: readTemplate
