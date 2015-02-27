@@ -12,17 +12,17 @@ parse ->
         @compile-files( (-> "lsc -b -p -c #{it.orig-complete} > #{it.build-target}" ) , ".js", g)
 
     @collect "build", ->
-        @command-seq -> [
             @toDir "./lib", { strip: "src" }, -> [
                 @es6 "src/**/*.js6"
                 @lsc "src/**/*.ls"
             ]
-            @cmd "cp ./lib/index.js ."
-        ]
 
     @collect "all", -> 
         @command-seq -> [
             @make \build
+            @cmd "cp ./lib/index.js ."
+            @cmd "chmod +x ./lib/packs/serve.js"
+            @cmd "chmod +x ./lib/packs/livereload.js"
         ]
 
     @collect "clean", -> [

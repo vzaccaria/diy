@@ -1,7 +1,7 @@
 "use strict"; 
 
 TreeModel = require('tree-model')
-debug     = require('debug')('tree')
+debug     = require('debug')('diy:tree')
 uid       = require('uid')
 _         = require('lodash')
 path      = require('path')

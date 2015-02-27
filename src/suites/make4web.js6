@@ -1,0 +1,25 @@
+var debug = require('debug')('diy:make4web')
+
+var {
+    parse
+} = require('../tree')
+var {
+    transcript
+} = require('../backends/make')
+var webPack = require('../packs/web')
+
+var _module = () => {
+
+    var generateProject = (body, options) => {
+        transcript(parse(_ => {
+            _.addPack(webPack);
+            body.apply(_,[ _ ]);
+        }), options);
+    }
+
+    return {
+        generateProject: generateProject
+    }
+}
+
+module.exports = _module()

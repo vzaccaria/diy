@@ -1,3 +1,3 @@
 
 
-module.exports = require('./lib/nmake')
+module.exports = require('./lib/suites/make4web')

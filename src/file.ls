@@ -1,5 +1,5 @@
 _      = require('lodash')
-debug  = require('debug')('file')
+debug  = require('debug')('diy:file')
 assert = require('assert')
 path   = require('path')
 moment = require('moment')

@@ -4,6 +4,8 @@ _ = require('lodash')
 
 { fillWithData } = require('./make')
 
+uid = require('uid')
+
 _module = ->
 
     return {
