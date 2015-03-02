@@ -1,10 +1,11 @@
-"use strict"; 
+"use strict";
 
 TreeModel = require('tree-model')
 debug     = require('debug')('diy:tree')
 uid       = require('uid')
 _         = require('lodash')
 path      = require('path')
+glob      = require('glob')
 
 { phony, product, targetStore } = require('./file')
 
@@ -27,7 +28,7 @@ processCompileNode = (node) ->
 
         @products = _.map(buildTargets, (.name))
         buildTargets = buildTargets ++ (new phony(@targetName, @products, {} ))
-        return buildTargets 
+        return buildTargets
 
 
 processPostProcessNode = (node) ->
@@ -90,16 +91,16 @@ getSources = (r) ->
     cNodes = _.filter(cNodes, (.model.type == 'compile'))
     sources = _.map cNodes, (.model.sources)
     return _.filter(_.uniq(_.flattenDeep(sources)))
-    
+
 
 ensureDirectoryExists = (p) ->
     new product(path.dirname(p.name), [], "mkdir -p #{path.dirname(p.name)}", [])
 
 
 
-class treeBuilder 
+class treeBuilder
 
-    -> 
+    ->
         @curNode = emptyNode!
         @curNode.model.targetName = "root"
         @curNode.model.type = "root"
@@ -109,17 +110,23 @@ class treeBuilder
         savedCurNode = @curNode
         @curNode = newNode
         body.apply(@, [ @ ])
-        @curNode = savedCurNode 
+        @curNode = savedCurNode
         newNode.model.children = newNode.children.map (.model)
         return newNode
 
     cmd: (comm, deps) ~>
         deps ?= []
-        @curNode.addChild(tree.parse({type: "command", targetName: "k-#{uid(8)}", cmd: comm }))
+        @curNode.addChild(tree.parse({type: "command", targetName: "k-#{uid(8)}", cmd: comm, deps: [] }))
 
-    compileFiles: (cmd, product, src, deps) ~>
-        src = [ src ]
+    compileFiles: (cmd, product, src) ~>
+        src = src
+        deps = &[3 to ]
         deps ?= []
+        debug "deps: #{JSON.stringify(deps)}"
+        debug "src: #{JSON.stringify(src)}"
+        src = glob.sync(src)
+        deps = _.map(deps, (-> glob.sync(it))) |> _.flattenDeep
+        debug "deps: #{JSON.stringify(deps)}"
         @curNode.addChild(tree.parse({cmd-fun: cmd, product-fun: product, sources: src, deps: deps, targetName: "c-#{uid(8)}", type: "compile", children: [] }))
 
     processFiles: (cmd, product, body) ~>
@@ -132,7 +139,7 @@ class treeBuilder
         _.extend(root.model, {cmd-fun: cmd, product-fun: product, targetName: "r-#{uid(8)}", type: "reduce", deps: []})
         @curNode.addChild(root)
 
-    _collect: (name, body, options) ~>  
+    _collect: (name, body, options) ~>
         root = @createTree(body)
         _.extend(root.model, { targetName: name, options: options, type: "collect" })
         @curNode.addChild(root)
@@ -144,22 +151,22 @@ class treeBuilder
         if _.is-function(options)
             body = options
             options = {}
-        root = @createTree(body) 
+        root = @createTree(body)
 
-        if not options.strip? 
+        if not options.strip?
             product-fun = (s) -> "#{name}/#{s.source}"
-        else 
+        else
             product-fun = (s) -> "#{name}/#{s.source.replace(options.strip, "")}"
 
         cmd-fun = (_) -> "cp #{_.source} #{_.product}"
 
         _.extend(root.model, {
-            type: "move", 
-            options: options, 
-            destination: name, 
+            type: "move",
+            options: options,
+            destination: name,
             cmd-fun: cmd-fun
             product-fun: product-fun
-            targetName: "m-#{uid(8)}", 
+            targetName: "m-#{uid(8)}",
             deps: []})
         @curNode.addChild(root)
 
@@ -180,7 +187,7 @@ class treeBuilder
         dirs         = forAllProducts(targets, ensureDirectoryExists)
         iTargetStore.addSources getSources(@root)
 
-        prepare = new phony("prepare", _.map(dirs, (.name)), {} )  
+        prepare = new phony("prepare", _.map(dirs, (.name)), {} )
 
         actions = forAllProducts targets, ->
                     "rm -f #{it.name}"
@@ -193,7 +200,7 @@ class treeBuilder
         _.map targets, iTargetStore.addTarget
 
 
-        return iTargetStore 
+        return iTargetStore
 
     addPack: (pack) ~>
         for k,v of pack
@@ -205,11 +212,6 @@ parse = (body) ->
 
 
 module.exports = {
-    build: parse 
-    parse: parse 
+    build: parse
+    parse: parse
 }
-
-
-
-
-

@@ -1,5 +1,4 @@
-#!/usr/bin/env lsc 
-
+#!/usr/bin/env lsc
 
 { parse, add-plugin } = require('newmake')
 
@@ -17,15 +16,16 @@ parse ->
                 @lsc "src/**/*.ls"
             ]
 
-    @collect "all", -> 
+    @collect "all", ->
         @command-seq -> [
             @make \build
             @cmd "cp ./lib/index.js ."
             @cmd "chmod +x ./lib/packs/serve.js"
             @cmd "chmod +x ./lib/packs/livereload.js"
+            @cmd "./tests/test.sh"
         ]
 
     @collect "clean", -> [
-        @command-seq -> 
+        @command-seq ->
             @remove-all-targets()
     ]

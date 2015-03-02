@@ -8,7 +8,7 @@ path      = require('path')
 doc = """
 Usage:
     livereload GLOB [ -s STRIP ]
-    livereload -h | --help 
+    livereload -h | --help
 
 Options:
     -s, --strip STRIP   strip STRIP prefix from files sent to the livereload server
@@ -21,7 +21,7 @@ Arguments
 get-option = (a, b, def, o) ->
     if not o[a] and not o[b]
         return def
-    else 
+    else
         return o[b]
 
 
@@ -68,13 +68,6 @@ main = (argv) ->
     debug "Watching for livereload #{files}"
     start-livereload!
     watch-dest-files files, (event, filepath) ->
-        notify-change strip, filepath 
+        notify-change strip, filepath
 
 main(process.argv)
-
-
-
-
-
-
-

@@ -53,9 +53,7 @@ var f = parse(_ => {
         }, _ => {
             _.collect("build", _ => {
                 _.minify(_ => {
-                    _.livescript("src/*.ls")
-                    _.livescript("src/packs/*.ls")
-                    _.livescript("src/backends/*.ls")
+                    _.livescript("src/*.ls", "src/packs/*.ls", "src/backends/*.ls")
                     _.sixToFive("src/*.js6")
                 })
 

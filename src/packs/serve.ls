@@ -8,9 +8,9 @@ path      = require('path')
 doc = """
 Usage:
     serve EXPRESS_ROOT [ -p PORT ]
-    serve -h | --help 
+    serve -h | --help
 
-Arguments: 
+Arguments:
     EXPRESS_ROOT      root to serve the files from; files are served with livereload code baked in
 
 """
@@ -18,12 +18,11 @@ Arguments:
 get-option = (a, b, def, o) ->
     if not o[a] and not o[b]
         return def
-    else 
+    else
         return o[b]
 
 
 get-options = ->
-
     o     = docopt(doc)
     port = get-option('-p', '--port', '4000', o)
     root = o['EXPRESS_ROOT']
@@ -32,11 +31,11 @@ get-options = ->
 startExpress = (EXPRESS_ROOT, EXPRESS_PORT) ->
   express = require('express');
   app = express();
-  app.use(require('connect-livereload')()) 
+  app.use(require('connect-livereload')())
   app.use(express.static(EXPRESS_ROOT, {maxAge: 0}));
   app.listen(EXPRESS_PORT);
   debug "Serving #{EXPRESS_ROOT} at port #{EXPRESS_PORT}"
-  debug "Added connect-livereload: " 
+  debug "Added connect-livereload: "
 
 
 main = ->
@@ -45,10 +44,3 @@ main = ->
     startExpress root, port
 
 main!
-
-
-
-
-
-
-

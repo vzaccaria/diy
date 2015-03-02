@@ -7,22 +7,25 @@ process-stderr-with = (command, processor) ->
 
 
 _module = ->
-          
-    iface = { 
+
+    iface = {
         livescript: (dir, deps) ->
             command = (_) -> "lsc -c #{_.source}"
             product = (_) -> "#{_.source.replace(/\..*/, '.js')}"
-            @compileFiles(command, product, glob.sync(dir))
+            args = [ command, product ] ++ &[0 to ]
+            @compileFiles.apply(@, args)
 
         livescriptXc: (dir, deps) ->
             command = (_) -> process-stderr-with "lsc -c #{_.source}", "xcparse"
             product = (_) -> "#{_.source.replace(/\..*/, '.js')}"
-            @compileFiles(command, product, glob.sync(dir))
+            args = [ command, product ] ++ &[0 to ]
+            @compileFiles.apply(@, args)
 
         sixToFive: (dir, deps) ->
             command = (_) -> "6to5 #{_.source} -o #{_.product}"
             product = (_) -> "#{_.source.replace(/\..*/, '.js')}"
-            @compileFiles(command, product, glob.sync(dir))
+            args = [ command, product ] ++ &[0 to ]
+            @compileFiles.apply(@, args)
 
         concat: (body) ->
             command = (_) -> "cat #{_.sources * ' '} > #{_.product}"
@@ -56,8 +59,7 @@ _module = ->
             @cmd("#{__dirname}/../../node_modules/.bin/pm2 delete #{__dirname}/serve.js")
 
     }
-  
-    return iface
- 
-module.exports = _module()
 
+    return iface
+
+module.exports = _module()
