@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/vzaccaria/dyi",
   "dependencies": {
+    "babel": "^4.6.6",
     "bluebird": "^2.9.12",
     "connect-livereload": "^0.5.3",
     "debug": "^2.1.1",
