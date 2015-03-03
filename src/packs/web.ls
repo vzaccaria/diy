@@ -50,8 +50,10 @@ _module = ->
 
         startWatch: (glob, strip) ->
             glob ?= '.'
-            strip ?= ''
-            @cmd("#{__dirname}/../../node_modules/.bin/pm2 start #{__dirname}/livereload.js -- #glob -s #strip")
+            cmd = "#{__dirname}/../../node_modules/.bin/pm2 start #{__dirname}/livereload.js -- #glob"
+            if strip?
+              cmd := cmd + " -s #strip "
+            @cmd(cmd)
 
         stopWatch: (strip) ->
             @cmd("#{__dirname}/../../node_modules/.bin/pm2 delete #{__dirname}/livereload.js")
