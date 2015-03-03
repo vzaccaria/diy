@@ -5,7 +5,7 @@
 parse ->
 
     @add-plugin "es6", (g) ->
-        @compile-files( (-> "6to5 #{it.orig-complete} -o #{it.build-target}" ) , ".js", g)
+        @compile-files( (-> "./node_modules/.bin/babel #{it.orig-complete} -o #{it.build-target}" ) , ".js", g)
 
     @add-plugin "lsc", (g) ->
         @compile-files( (-> "lsc -b -p -c #{it.orig-complete} > #{it.build-target}" ) , ".js", g)
