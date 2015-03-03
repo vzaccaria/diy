@@ -7,11 +7,14 @@ path      = require('path')
 
 doc = """
 Usage:
-    serve EXPRESS_ROOT [ -p PORT ]
+    serve ROOT [ -p PORT ]
     serve -h | --help
 
+Options:
+    -p, --port PORT       PORT
+
 Arguments:
-    EXPRESS_ROOT      root to serve the files from; files are served with livereload code baked in
+    ROOT                  Root to serve the files from; files are served with livereload code baked in
 
 """
 
@@ -25,7 +28,7 @@ get-option = (a, b, def, o) ->
 get-options = ->
     o     = docopt(doc)
     port = get-option('-p', '--port', '4000', o)
-    root = o['EXPRESS_ROOT']
+    root = o['ROOT']
     return { root, port }
 
 startExpress = (EXPRESS_ROOT, EXPRESS_PORT) ->

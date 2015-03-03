@@ -27,6 +27,12 @@ _module = ->
             args = [ command, product ] ++ &[0 to ]
             @compileFiles.apply(@, args)
 
+        js: (dir, deps) ->
+          command = (_) -> "cp #{_.source} #{_.product}"
+          product = (_) -> "copy-#{uid(4)}.js"
+          args = [ command, product ] ++ &[0 to ]
+          @compileFiles.apply(@, args)
+
         concat: (body) ->
             command = (_) -> "cat #{_.sources * ' '} > #{_.product}"
             product = (_) -> "concat-#{uid(4)}.js"
