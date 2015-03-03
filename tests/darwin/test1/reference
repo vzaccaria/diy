@@ -68,7 +68,7 @@
             {
                 "name": "r-9",
                 "dependencies": [
-                    "index.js"
+                    "./index.js"
                 ]
             },
             {

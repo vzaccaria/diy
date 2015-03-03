@@ -35,7 +35,7 @@ p-6: minified-10.js
 
 
 .PHONY: r-7
-r-7: index.js 
+r-7: ./index.js 
 
 
 .PHONY: all

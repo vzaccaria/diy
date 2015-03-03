@@ -52,8 +52,10 @@ var f = parse(_ => {
             strip: 'src/'
         }, _ => {
             _.collect("build", _ => {
-                _.minify(_ => {
-                    _.js("src/*.js6")
+                _.concat( _ => {
+                    _.minify(_ => {
+                        _.js("src/*.js6")
+                    })
                 })
             })
         })

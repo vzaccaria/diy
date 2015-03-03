@@ -40,9 +40,19 @@ processPostProcessNode = (node) ->
 processReduceNode = (node) ->
     let @=node.model
         debug "reduceNode name", @
-        @deps       = _.flattenDeep(@children.map (.products))
-        return processPostProcessNode(node)
 
+        source      = "fake-src"
+
+        @deps       = _.flattenDeep(@children.map (.products))
+        @sources    = @deps
+
+        productName = @product-fun({source: source})
+        commandName = @cmd-fun({source: source, product: productName, sources: @sources, deps: @deps})
+        @products = [ productName ]
+
+        f1 = new product(productName, source, commandName, @deps)
+        f2 = new phony(@targetName, @products, {} )
+        return [ f1, f2 ]
 
 processCollectNode = (node) ->
     let @=node.model

@@ -43,7 +43,7 @@ p-8: minified-14.js
 
 
 .PHONY: r-9
-r-9: index.js 
+r-9: ./index.js 
 
 
 .PHONY: all
