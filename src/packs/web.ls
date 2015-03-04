@@ -1,6 +1,7 @@
 debug = require('debug')('newmake/packs')
 glob = require('glob')
 uid = require('uid')
+path = require('path')
 
 process-stderr-with = (command, processor) ->
     "/bin/bash -c \"(#command) 2> >(#processor 1>&2)\""
@@ -32,6 +33,8 @@ _module = ->
           product = (_) -> "copy-#{uid(4)}.js"
           args = [ command, product ] ++ &[0 to ]
           @compileFiles.apply(@, args)
+
+
 
         concat: (body) ->
             command = (_) -> "cat #{_.sources * ' '} > #{_.product}"

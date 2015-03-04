@@ -157,6 +157,12 @@ class treeBuilder
     collect: (name, body) ~>
         @_collect(name, body, {})
 
+    copy: (dir, deps) ->
+            command = (_) -> "echo 'using #{_.source} as product'"
+            product = (_) -> _.source
+            args = [ command, product ] ++ &[0 to ]
+            @compileFiles.apply(@, args)
+
     mirrorTo: (name, options, body) ~>
         if _.is-function(options)
             body = options
@@ -195,16 +201,21 @@ class treeBuilder
         iTargetStore = new targetStore()
         targets      = _.uniq(processNodes(@root), (.name))
         dirs         = forAllProducts(targets, ensureDirectoryExists)
+        sources      = getSources(@root)
+
         iTargetStore.addSources getSources(@root)
 
         prepare = new phony("prepare", _.map(dirs, (.name)), {} )
 
-        actions = forAllProducts targets, ->
-                    "rm -f #{it.name}"
+        removeProductCmds = forAllProducts targets, ->
+                    if not (it.name in sources)
+                      "rm -f #{it.name}"
+                    else
+                      "echo 'Not cleaning up #{it.name} because is a source'"
 
         clean = new phony("clean", [] , {
             sequential: true
-            actions: actions
+            actions: removeProductCmds
         })
         targets = targets ++ dirs ++ [ prepare ] ++ [ clean ]
         _.map targets, iTargetStore.addTarget
