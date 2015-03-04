@@ -4,7 +4,7 @@ assert = require('assert')
 path   = require('path')
 moment = require('moment')
 
-class target 
+class target
     (@name, @depNames) ~>
         debug "Creating new target: #{@name} - deps: #{depNames}"
         debug @depNames
@@ -16,13 +16,13 @@ class target
         _.map @depNames, ->
             path.normalize(it)
 
-class phony extends target 
+class phony extends target
     (@name, @depNames, @options) ~>
         assert(_.is-object(@options))
         super(@name, @depNames)
 
 class product extends target
-    (@name, @productOf, @command, @deps) ~> 
+    (@name, @productOf, @command, @deps) ~>
         debug("Created product #{@name}")
         assert(@productOf)
         assert(@command)
@@ -30,7 +30,7 @@ class product extends target
 
 
 
-class targetStore 
+class targetStore
     ~>
         @_targets = {}
 
@@ -47,16 +47,16 @@ class targetStore
         _.keys(_.omit @_targets, (.constructor.name != 'phony')) # on values
 
     getActualTargetNames: ~>
-        _.keys(_.omit @_targets, (.constructor.name == 'phony')) # on values
+        trgts = _.difference(_.keys(_.omit @_targets, (.constructor.name == 'phony')), @_sources) # Exclude sources.
 
     getTargetDepsAsNames: (tName) ~>
         _.uniq(@_targets[tName].depNames)
 
     getPhonyTargetActions: (tName) ~>
         @ensureTargetIsPhony(tName)
-        if @_targets[tName].options?.actions? 
+        if @_targets[tName].options?.actions?
             return @_targets[tName].options.actions
-        else    
+        else
             return []
 
     isPhonyTargetSequential: (tName) ~>
@@ -66,7 +66,7 @@ class targetStore
     getTargetCreationCommand: (tName) ~>
         if @_targets[tName].constructor.name == 'phony'
             throw "Sorry, #tname is not a construction target"
-        else 
+        else
             @_targets[tName].command
 
     getMeta: (options) ~>
@@ -75,7 +75,7 @@ class targetStore
 
         meta = {
             options: options
-            data: 
+            data:
                 phonyTargets: []
                 phonySequentialTargets: []
                 targets: []
@@ -88,7 +88,7 @@ class targetStore
                     name: k
                     dependencies: @getTargetDepsAsNames(k)
                 }
-            else 
+            else
                 meta.data.phonySequentialTargets.push {
                     name: k
                     dependencies: @getTargetDepsAsNames(k)
@@ -101,7 +101,7 @@ class targetStore
                 dependencies: @getTargetDepsAsNames(k)
                 command: @getTargetCreationCommand(k)
             }
-            
+
         return meta
 
 

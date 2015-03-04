@@ -42,12 +42,6 @@ clean:
 
 
 
-src/bar.js6: src/bar.js6 
-	echo 'using src/bar.js6 as product'	
-
-src/foo.js6: src/foo.js6 
-	echo 'using src/foo.js6 as product'	
-
 concat-4.js: src/bar.js6 src/foo.js6 
 	cat src/bar.js6 src/foo.js6 > concat-4.js	
 
