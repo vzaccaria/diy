@@ -47,3 +47,6 @@ tests/darwin/test3/Product.xcodeproj/xcuserdata/zaccaria.xcuserdatad/xcschemes/P
 tests/darwin/test3/Product.xcodeproj/xcuserdata/zaccaria.xcuserdatad/xcschemes/xcschememanagement.plist
 tests/darwin/test3/src/backends/c.js
 tests/darwin/test3/src/packs/b.js
+tests/darwin/test4/output
+tests/darwin/test4/src/backends/c.js
+tests/darwin/test4/src/packs/b.js
