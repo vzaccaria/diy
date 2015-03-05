@@ -34,8 +34,6 @@ _module = ->
           args = [ command, product ] ++ &[0 to ]
           @compileFiles.apply(@, args)
 
-
-
         concat: (body) ->
             command = (_) -> "cat #{_.sources * ' '} > #{_.product}"
             product = (_) -> "concat-#{uid(4)}.js"
@@ -53,7 +51,7 @@ _module = ->
 
         startWatch: (glob, strip) ->
             glob ?= '.'
-            cmd = "#{__dirname}/../../node_modules/.bin/pm2 start #{__dirname}/livereload.js -- #glob"
+            cmd = "#{__dirname}/../../node_modules/.bin/pm2 start #{__dirname}/livereload.js -- '#glob'"
             if strip?
               cmd := cmd + " -s #strip "
             @cmd(cmd)
