@@ -211,7 +211,7 @@ class treeBuilder
                     if not (it.name in sources)
                       "rm -f #{it.name}"
                     else
-                      "echo 'Not cleaning up #{it.name} because is a source'"
+                      "@echo 'Not cleaning up #{it.name} because is a source'"
 
         clean = new phony("clean", [] , {
             sequential: true

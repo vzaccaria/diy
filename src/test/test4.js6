@@ -17,7 +17,7 @@ var injectTestDeps = (mod) => {
     mod.__set__('moment', () => {
             return {
                 format: () => {
-                    return "NEVER"
+                    return ""
                 }
             }
         })

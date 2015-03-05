@@ -1,4 +1,4 @@
-"use strict"; 
+"use strict";
 
 debug = require('debug')('backends/make')
 moment = require('moment')
@@ -9,21 +9,22 @@ engine = new Liquid.Engine
 
 _module = ->
 
-    fillWithData = (data) -> 
+    fillWithData = (data) ->
         template = cat("#{__dirname}/../../src/backends/make/template.mk")
-        return engine.parseAndRender(template, data) 
+        return engine.parseAndRender(template, data)
 
-    iface = { 
+    iface = {
 
         fillWithData: fillWithData
 
         transcript: (f, options) ->
-            fillWithData(f.getMeta(options)).then ->
+            meta = f.getMeta(options)
+            meta.info = { today: moment().format('MMMM D, YYYY') }
+            fillWithData(meta).then ->
                 console.log it
 
     }
-  
-    return iface
- 
-module.exports = _module()
 
+    return iface
+
+module.exports = _module()

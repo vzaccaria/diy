@@ -34,8 +34,8 @@ prepare: src . lib
 
 .PHONY: clean
 clean:  
-	echo 'Not cleaning up src/bar.js6 because is a source'
-	echo 'Not cleaning up src/foo.js6 because is a source'
+	@echo 'Not cleaning up src/bar.js6 because is a source'
+	@echo 'Not cleaning up src/foo.js6 because is a source'
 	rm -f concat-4.js
 	rm -f lib/concat-4.js
 
