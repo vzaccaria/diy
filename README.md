@@ -5,7 +5,7 @@
 # install
 
 ```shell
-npm install diy
+npm install diy-build
 ```
 
 # example
