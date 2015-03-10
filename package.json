@@ -1,6 +1,6 @@
 {
   "name": "diy-build",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "do it yourself - build DSL",
   "main": "index.js",
   "scripts": {
