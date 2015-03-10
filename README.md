@@ -54,7 +54,6 @@ To generate the makefile we use babel to get ES5:
 babel configure.js | node
 ```
 
-And here's the [generated makefile](demo/makefile).
 
 The makefile comes with two default targets (`prepare` and `clean`) plus all the targets defined with `collect`:
 
@@ -131,7 +130,7 @@ generateProject(_ => {
     _.stopWatch()
     _.stopServe()
   })
-  
+
     /* ... */
 })
 ```

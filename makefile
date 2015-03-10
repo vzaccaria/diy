@@ -191,3 +191,24 @@ cmd-seq-29:
 
 .PHONY : clean
 clean: cmd-seq-29
+
+.PHONY : cmd-30
+cmd-30: 
+	./node_modules/.bin/xyz --increment major
+
+.PHONY : release-major
+release-major: cmd-30
+
+.PHONY : cmd-31
+cmd-31: 
+	./node_modules/.bin/xyz --increment minor
+
+.PHONY : release-minor
+release-minor: cmd-31
+
+.PHONY : cmd-32
+cmd-32: 
+	./node_modules/.bin/xyz --increment patch
+
+.PHONY : release-patch
+release-patch: cmd-32
