@@ -16,7 +16,8 @@ parse ->
                 @lsc "src/**/*.ls"
             ]
 
-    @collect "all", ->
+    @collect "all", -> [
+        @cmd "./node_modules/.bin/verb"
         @command-seq -> [
             @make \build
             @cmd "cp ./lib/index.js ."
@@ -24,6 +25,7 @@ parse ->
             @cmd "chmod +x ./lib/packs/livereload.js"
             @cmd "./tests/test.sh"
         ]
+    ]
 
     @collect "clean", -> [
         @command-seq ->

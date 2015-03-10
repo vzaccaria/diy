@@ -138,52 +138,56 @@ build: lib/backends/xcode-make/entry.js lib/backends/xcode-make/parseWithData.js
 
 .PHONY : cmd-19
 cmd-19: 
-	make build
+	./node_modules/.bin/verb
 
 .PHONY : cmd-20
 cmd-20: 
-	cp ./lib/index.js .
+	make build
 
 .PHONY : cmd-21
 cmd-21: 
-	chmod +x ./lib/packs/serve.js
+	cp ./lib/index.js .
 
 .PHONY : cmd-22
 cmd-22: 
-	chmod +x ./lib/packs/livereload.js
+	chmod +x ./lib/packs/serve.js
 
 .PHONY : cmd-23
 cmd-23: 
+	chmod +x ./lib/packs/livereload.js
+
+.PHONY : cmd-24
+cmd-24: 
 	./tests/test.sh
 
-.PHONY : cmd-seq-24
-cmd-seq-24: 
-	make cmd-19
+.PHONY : cmd-seq-25
+cmd-seq-25: 
 	make cmd-20
 	make cmd-21
 	make cmd-22
 	make cmd-23
+	make cmd-24
 
 .PHONY : all
-all: cmd-seq-24
-
-.PHONY : clean-25
-clean-25: 
-	rm -rf .build/0-entry.js .build/1-parseWithData.js .build/2-readTemplate.js .build/3-writeProject.js .build/4-make4web.js .build/5-xcode4web.js .build/6-test0.js .build/7-test1.js .build/8-test2.js .build/9-test3.js .build/10-test4.js .build/11-make.js .build/12-xcode-make.js .build/13-file.js .build/14-index.js .build/15-livereload.js .build/16-serve.js .build/17-web.js .build/18-tree.js lib/backends/xcode-make/entry.js lib/backends/xcode-make/parseWithData.js lib/backends/xcode-make/readTemplate.js lib/backends/xcode-make/writeProject.js lib/suites/make4web.js lib/suites/xcode4web.js lib/test/test0.js lib/test/test1.js lib/test/test2.js lib/test/test3.js lib/test/test4.js lib/backends/make.js lib/backends/xcode-make.js lib/file.js lib/index.js lib/packs/livereload.js lib/packs/serve.js lib/packs/web.js lib/tree.js
+all: cmd-19 cmd-seq-25
 
 .PHONY : clean-26
 clean-26: 
-	rm -rf .build
+	rm -rf .build/0-entry.js .build/1-parseWithData.js .build/2-readTemplate.js .build/3-writeProject.js .build/4-make4web.js .build/5-xcode4web.js .build/6-test0.js .build/7-test1.js .build/8-test2.js .build/9-test3.js .build/10-test4.js .build/11-make.js .build/12-xcode-make.js .build/13-file.js .build/14-index.js .build/15-livereload.js .build/16-serve.js .build/17-web.js .build/18-tree.js lib/backends/xcode-make/entry.js lib/backends/xcode-make/parseWithData.js lib/backends/xcode-make/readTemplate.js lib/backends/xcode-make/writeProject.js lib/suites/make4web.js lib/suites/xcode4web.js lib/test/test0.js lib/test/test1.js lib/test/test2.js lib/test/test3.js lib/test/test4.js lib/backends/make.js lib/backends/xcode-make.js lib/file.js lib/index.js lib/packs/livereload.js lib/packs/serve.js lib/packs/web.js lib/tree.js
 
 .PHONY : clean-27
 clean-27: 
+	rm -rf .build
+
+.PHONY : clean-28
+clean-28: 
 	mkdir -p .build
 
-.PHONY : cmd-seq-28
-cmd-seq-28: 
-	make clean-25
+.PHONY : cmd-seq-29
+cmd-seq-29: 
 	make clean-26
 	make clean-27
+	make clean-28
 
 .PHONY : clean
-clean: cmd-seq-28
+clean: cmd-seq-29

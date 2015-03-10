@@ -50,3 +50,4 @@ tests/darwin/test3/src/packs/b.js
 tests/darwin/test4/output
 tests/darwin/test4/src/backends/c.js
 tests/darwin/test4/src/packs/b.js
+templates/v.md
