@@ -1,4 +1,4 @@
-#!/usr/bin/env sh 
+#!/usr/bin/env sh
 set -e
 
 # Source directory
@@ -13,6 +13,14 @@ npm=$srcdir/../node_modules/.bin
 platform=`node -e 'console.log(require("os").platform());'`
 
 for f in $srcdir/$platform/*
+do
+	# is it a directory?
+	if [ -d "$f" ]; then
+		$f/run.sh
+	fi
+done
+
+for f in $srcdir/common/*
 do
 	# is it a directory?
 	if [ -d "$f" ]; then
