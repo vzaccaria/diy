@@ -217,9 +217,15 @@ class treeBuilder
             sequential: true
             actions: removeProductCmds
         })
-        targets = targets ++ dirs ++ [ prepare ] ++ [ clean ]
-        _.map targets, iTargetStore.addTarget
 
+        update = new phony("update", [ 'clean '], {
+            sequential: true
+            actions: [
+              process.argv * ' '
+            ]
+        })
+        targets = targets ++ dirs ++ [ prepare, clean, update ]
+        _.map targets, iTargetStore.addTarget
 
         return iTargetStore
 

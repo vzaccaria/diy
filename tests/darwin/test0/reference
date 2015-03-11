@@ -7,51 +7,51 @@
 
 
 .PHONY: c-1
-c-1: src/a.js src/index.js 
+c-1: src/a.js src/index.js
 
 
 .PHONY: c-2
-c-2: src/packs/b.js 
+c-2: src/packs/b.js
 
 
 .PHONY: c-3
-c-3: src/backends/c.js 
+c-3: src/backends/c.js
 
 
 .PHONY: c-4
-c-4: 
+c-4:
 
 
 .PHONY: p-5
-p-5: minified-10.js minified-11.js minified-12.js minified-13.js 
+p-5: minified-10.js minified-11.js minified-12.js minified-13.js
 
 
 .PHONY: build
-build: p-5 
+build: p-5
 
 
 .PHONY: m-6
-m-6: lib/minified-10.js lib/minified-11.js lib/minified-12.js lib/minified-13.js 
+m-6: lib/minified-10.js lib/minified-11.js lib/minified-12.js lib/minified-13.js
 
 
 .PHONY: c-7
-c-7: src/index.js 
+c-7: src/index.js
 
 
 .PHONY: p-8
-p-8: minified-14.js 
+p-8: minified-14.js
 
 
 .PHONY: r-9
-r-9: ./index.js 
+r-9: ./index.js
 
 
 .PHONY: all
-all: m-6 r-9 
+all: m-6 r-9
 
 
 .PHONY: prepare
-prepare: src src/packs src/backends . lib 
+prepare: src src/packs src/backends . lib
 
 
 
@@ -74,63 +74,68 @@ clean:
 	rm -f index.js
 
 
+.PHONY: update
+update: 
+	make clean   
+	node /Users/zaccaria/development/github/diy/lib/test/test0.js
+
+
 
 
 src/a.js: src/a.ls 
-	lsc -c src/a.ls	
+	lsc -c src/a.ls
 
 src/index.js: src/index.ls 
-	lsc -c src/index.ls	
+	lsc -c src/index.ls
 
 src/packs/b.js: src/packs/b.ls 
-	lsc -c src/packs/b.ls	
+	lsc -c src/packs/b.ls
 
 src/backends/c.js: src/backends/c.ls 
-	lsc -c src/backends/c.ls	
+	lsc -c src/backends/c.ls
 
 minified-10.js: src/a.js 
-	uglifyjs src/a.js > minified-10.js	
+	uglifyjs src/a.js > minified-10.js
 
 minified-11.js: src/index.js 
-	uglifyjs src/index.js > minified-11.js	
+	uglifyjs src/index.js > minified-11.js
 
 minified-12.js: src/packs/b.js 
-	uglifyjs src/packs/b.js > minified-12.js	
+	uglifyjs src/packs/b.js > minified-12.js
 
 minified-13.js: src/backends/c.js 
-	uglifyjs src/backends/c.js > minified-13.js	
+	uglifyjs src/backends/c.js > minified-13.js
 
 lib/minified-10.js: minified-10.js 
-	cp minified-10.js ./lib/minified-10.js	
+	cp minified-10.js ./lib/minified-10.js
 
 lib/minified-11.js: minified-11.js 
-	cp minified-11.js ./lib/minified-11.js	
+	cp minified-11.js ./lib/minified-11.js
 
 lib/minified-12.js: minified-12.js 
-	cp minified-12.js ./lib/minified-12.js	
+	cp minified-12.js ./lib/minified-12.js
 
 lib/minified-13.js: minified-13.js 
-	cp minified-13.js ./lib/minified-13.js	
+	cp minified-13.js ./lib/minified-13.js
 
 minified-14.js: src/index.js 
-	uglifyjs src/index.js > minified-14.js	
+	uglifyjs src/index.js > minified-14.js
 
 index.js: minified-14.js 
-	cp minified-14.js ./index.js	
+	cp minified-14.js ./index.js
 
 src: 
-	mkdir -p src	
+	mkdir -p src
 
 src/packs: 
-	mkdir -p src/packs	
+	mkdir -p src/packs
 
 src/backends: 
-	mkdir -p src/backends	
+	mkdir -p src/backends
 
 .: 
-	mkdir -p .	
+	mkdir -p .
 
 lib: 
-	mkdir -p lib	
-
+	mkdir -p lib
 

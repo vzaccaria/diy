@@ -7,43 +7,43 @@
 
 
 .PHONY: c-1
-c-1: src/a.js src/index.js 
+c-1: src/a.js src/index.js
 
 
 .PHONY: c-2
-c-2: 
+c-2:
 
 
 .PHONY: p-3
-p-3: minified-8.js minified-9.js 
+p-3: minified-8.js minified-9.js
 
 
 .PHONY: build
-build: p-3 
+build: p-3
 
 
 .PHONY: m-4
-m-4: lib/minified-8.js lib/minified-9.js 
+m-4: lib/minified-8.js lib/minified-9.js
 
 
 .PHONY: c-5
-c-5: src/index.js 
+c-5: src/index.js
 
 
 .PHONY: p-6
-p-6: minified-10.js 
+p-6: minified-10.js
 
 
 .PHONY: r-7
-r-7: ./index.js 
+r-7: ./index.js
 
 
 .PHONY: all
-all: m-4 r-7 
+all: m-4 r-7
 
 
 .PHONY: prepare
-prepare: src . lib 
+prepare: src . lib
 
 
 
@@ -60,39 +60,44 @@ clean:
 	rm -f index.js
 
 
+.PHONY: update
+update: 
+	make clean   
+	node /Users/zaccaria/development/github/diy/lib/test/test2.js
+
+
 
 
 src/a.js: src/a.ls src/packs/b.ls src/backends/c.ls 
-	lsc -c src/a.ls	
+	lsc -c src/a.ls
 
 src/index.js: src/index.ls src/packs/b.ls src/backends/c.ls 
-	lsc -c src/index.ls	
+	lsc -c src/index.ls
 
 minified-8.js: src/a.js 
-	uglifyjs src/a.js > minified-8.js	
+	uglifyjs src/a.js > minified-8.js
 
 minified-9.js: src/index.js 
-	uglifyjs src/index.js > minified-9.js	
+	uglifyjs src/index.js > minified-9.js
 
 lib/minified-8.js: minified-8.js 
-	cp minified-8.js ./lib/minified-8.js	
+	cp minified-8.js ./lib/minified-8.js
 
 lib/minified-9.js: minified-9.js 
-	cp minified-9.js ./lib/minified-9.js	
+	cp minified-9.js ./lib/minified-9.js
 
 minified-10.js: src/index.js 
-	uglifyjs src/index.js > minified-10.js	
+	uglifyjs src/index.js > minified-10.js
 
 index.js: minified-10.js 
-	cp minified-10.js ./index.js	
+	cp minified-10.js ./index.js
 
 src: 
-	mkdir -p src	
+	mkdir -p src
 
 .: 
-	mkdir -p .	
+	mkdir -p .
 
 lib: 
-	mkdir -p lib	
-
+	mkdir -p lib
 

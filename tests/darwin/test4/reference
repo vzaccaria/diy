@@ -7,27 +7,27 @@
 
 
 .PHONY: c-1
-c-1: src/bar.js6 src/foo.js6 
+c-1: src/bar.js6 src/foo.js6
 
 
 .PHONY: r-2
-r-2: concat-4.js 
+r-2: concat-4.js
 
 
 .PHONY: build
-build: r-2 
+build: r-2
 
 
 .PHONY: m-3
-m-3: lib/concat-4.js 
+m-3: lib/concat-4.js
 
 
 .PHONY: all
-all: m-3 
+all: m-3
 
 
 .PHONY: prepare
-prepare: src . lib 
+prepare: src . lib
 
 
 
@@ -40,21 +40,26 @@ clean:
 	rm -f lib/concat-4.js
 
 
+.PHONY: update
+update: 
+	make clean   
+	node /Users/zaccaria/development/github/diy/lib/test/test4.js
+
+
 
 
 concat-4.js: src/bar.js6 src/foo.js6 
-	cat src/bar.js6 src/foo.js6 > concat-4.js	
+	cat src/bar.js6 src/foo.js6 > concat-4.js
 
 lib/concat-4.js: concat-4.js 
-	cp concat-4.js ./lib/concat-4.js	
+	cp concat-4.js ./lib/concat-4.js
 
 src: 
-	mkdir -p src	
+	mkdir -p src
 
 .: 
-	mkdir -p .	
+	mkdir -p .
 
 lib: 
-	mkdir -p lib	
-
+	mkdir -p lib
 

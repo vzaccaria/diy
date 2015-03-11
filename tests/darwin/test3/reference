@@ -7,31 +7,31 @@
 
 
 .PHONY: c-1
-c-1: copy-5.js copy-6.js 
+c-1: copy-5.js copy-6.js
 
 
 .PHONY: p-2
-p-2: minified-7.js minified-8.js 
+p-2: minified-7.js minified-8.js
 
 
 .PHONY: r-3
-r-3: concat-9.js 
+r-3: concat-9.js
 
 
 .PHONY: build
-build: r-3 
+build: r-3
 
 
 .PHONY: m-4
-m-4: lib/concat-9.js 
+m-4: lib/concat-9.js
 
 
 .PHONY: all
-all: m-4 
+all: m-4
 
 
 .PHONY: prepare
-prepare: . lib 
+prepare: . lib
 
 
 
@@ -46,30 +46,35 @@ clean:
 	rm -f lib/concat-9.js
 
 
+.PHONY: update
+update: 
+	make clean   
+	node /Users/zaccaria/development/github/diy/lib/test/test3.js
+
+
 
 
 copy-5.js: src/bar.js6 
-	cp src/bar.js6 copy-5.js	
+	cp src/bar.js6 copy-5.js
 
 copy-6.js: src/foo.js6 
-	cp src/foo.js6 copy-6.js	
+	cp src/foo.js6 copy-6.js
 
 minified-7.js: copy-5.js 
-	uglifyjs copy-5.js > minified-7.js	
+	uglifyjs copy-5.js > minified-7.js
 
 minified-8.js: copy-6.js 
-	uglifyjs copy-6.js > minified-8.js	
+	uglifyjs copy-6.js > minified-8.js
 
 concat-9.js: minified-7.js minified-8.js 
-	cat minified-7.js minified-8.js > concat-9.js	
+	cat minified-7.js minified-8.js > concat-9.js
 
 lib/concat-9.js: concat-9.js 
-	cp concat-9.js ./lib/concat-9.js	
+	cp concat-9.js ./lib/concat-9.js
 
 .: 
-	mkdir -p .	
+	mkdir -p .
 
 lib: 
-	mkdir -p lib	
-
+	mkdir -p lib
 

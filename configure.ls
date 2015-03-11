@@ -17,7 +17,6 @@ parse ->
             ]
 
     @collect "all", -> [
-        @cmd "./node_modules/.bin/verb"
         @command-seq -> [
             @make \build
             @cmd "cp ./lib/index.js ."

@@ -4,6 +4,11 @@ debug = require('debug')('backends/make')
 moment = require('moment')
 { cat } = require('shelljs')
 
+fs = require('fs')
+bb = require('bluebird')
+
+fs = bb.promisifyAll(fs)
+
 Liquid = require("liquid-node")
 engine = new Liquid.Engine
 
@@ -21,7 +26,7 @@ _module = ->
             meta = f.getMeta(options)
             meta.info = { today: moment().format('MMMM D, YYYY') }
             fillWithData(meta).then ->
-                console.log it
+                fs.writeFileAsync("./makefile", it, "utf8")
 
     }
 
