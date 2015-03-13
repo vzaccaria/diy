@@ -157,11 +157,14 @@ class treeBuilder
     collect: (name, body) ~>
         @_collect(name, body, {})
 
-    copy: (dir, deps) ->
+    copy: (dir, deps) ~>
             command = (_) -> "echo 'using #{_.source} as product'"
             product = (_) -> _.source
             args = [ command, product ] ++ &[0 to ]
             @compileFiles.apply(@, args)
+
+    glob: ~>
+        @copy.apply(&[0 to ])
 
     mirrorTo: (name, options, body) ~>
         if _.is-function(options)
