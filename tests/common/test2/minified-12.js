@@ -1,1 +1,0 @@
-(function(){lksl}).call(this);

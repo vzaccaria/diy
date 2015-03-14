@@ -3,159 +3,138 @@
 .build/0-make4web.js: src/suites/make4web.js6
 	./node_modules/.bin/babel src/suites/make4web.js6 -o .build/0-make4web.js
 
-.build/1-test0.js: src/test/test0.js6
-	./node_modules/.bin/babel src/test/test0.js6 -o .build/1-test0.js
+.build/1-make.js: src/backends/make.ls
+	lsc -b -p -c src/backends/make.ls > .build/1-make.js
 
-.build/2-test2.js: src/test/test2.js6
-	./node_modules/.bin/babel src/test/test2.js6 -o .build/2-test2.js
+.build/2-file.js: src/file.ls
+	lsc -b -p -c src/file.ls > .build/2-file.js
 
-.build/3-test3.js: src/test/test3.js6
-	./node_modules/.bin/babel src/test/test3.js6 -o .build/3-test3.js
+.build/3-index.js: src/index.ls
+	lsc -b -p -c src/index.ls > .build/3-index.js
 
-.build/4-test4.js: src/test/test4.js6
-	./node_modules/.bin/babel src/test/test4.js6 -o .build/4-test4.js
+.build/4-livereload.js: src/packs/livereload.ls
+	lsc -b -p -c src/packs/livereload.ls > .build/4-livereload.js
 
-.build/5-make.js: src/backends/make.ls
-	lsc -b -p -c src/backends/make.ls > .build/5-make.js
+.build/5-serve.js: src/packs/serve.ls
+	lsc -b -p -c src/packs/serve.ls > .build/5-serve.js
 
-.build/6-file.js: src/file.ls
-	lsc -b -p -c src/file.ls > .build/6-file.js
+.build/6-web.js: src/packs/web.ls
+	lsc -b -p -c src/packs/web.ls > .build/6-web.js
 
-.build/7-index.js: src/index.ls
-	lsc -b -p -c src/index.ls > .build/7-index.js
-
-.build/8-livereload.js: src/packs/livereload.ls
-	lsc -b -p -c src/packs/livereload.ls > .build/8-livereload.js
-
-.build/9-serve.js: src/packs/serve.ls
-	lsc -b -p -c src/packs/serve.ls > .build/9-serve.js
-
-.build/10-web.js: src/packs/web.ls
-	lsc -b -p -c src/packs/web.ls > .build/10-web.js
-
-.build/11-tree.js: src/tree.ls
-	lsc -b -p -c src/tree.ls > .build/11-tree.js
+.build/7-tree.js: src/tree.ls
+	lsc -b -p -c src/tree.ls > .build/7-tree.js
 
 lib/suites/make4web.js: .build/0-make4web.js
 	@mkdir -p ./lib//suites
 	cp .build/0-make4web.js $@
 
-lib/test/test0.js: .build/1-test0.js
-	@mkdir -p ./lib//test
-	cp .build/1-test0.js $@
-
-lib/test/test2.js: .build/2-test2.js
-	@mkdir -p ./lib//test
-	cp .build/2-test2.js $@
-
-lib/test/test3.js: .build/3-test3.js
-	@mkdir -p ./lib//test
-	cp .build/3-test3.js $@
-
-lib/test/test4.js: .build/4-test4.js
-	@mkdir -p ./lib//test
-	cp .build/4-test4.js $@
-
-lib/backends/make.js: .build/5-make.js
+lib/backends/make.js: .build/1-make.js
 	@mkdir -p ./lib//backends
-	cp .build/5-make.js $@
+	cp .build/1-make.js $@
 
-lib/file.js: .build/6-file.js
+lib/file.js: .build/2-file.js
 	@mkdir -p ./lib/
-	cp .build/6-file.js $@
+	cp .build/2-file.js $@
 
-lib/index.js: .build/7-index.js
+lib/index.js: .build/3-index.js
 	@mkdir -p ./lib/
-	cp .build/7-index.js $@
+	cp .build/3-index.js $@
 
-lib/packs/livereload.js: .build/8-livereload.js
+lib/packs/livereload.js: .build/4-livereload.js
 	@mkdir -p ./lib//packs
-	cp .build/8-livereload.js $@
+	cp .build/4-livereload.js $@
 
-lib/packs/serve.js: .build/9-serve.js
+lib/packs/serve.js: .build/5-serve.js
 	@mkdir -p ./lib//packs
-	cp .build/9-serve.js $@
+	cp .build/5-serve.js $@
 
-lib/packs/web.js: .build/10-web.js
+lib/packs/web.js: .build/6-web.js
 	@mkdir -p ./lib//packs
-	cp .build/10-web.js $@
+	cp .build/6-web.js $@
 
-lib/tree.js: .build/11-tree.js
+lib/tree.js: .build/7-tree.js
 	@mkdir -p ./lib/
-	cp .build/11-tree.js $@
+	cp .build/7-tree.js $@
+
+.build/8-test0.js: tests/common/test0/test0.js6
+	./node_modules/.bin/babel tests/common/test0/test0.js6 -o .build/8-test0.js
+
+tests/common/test0/test0.js: .build/8-test0.js
+	@mkdir -p ./tests/common/test0
+	cp .build/8-test0.js $@
 
 .PHONY : build
-build: lib/suites/make4web.js lib/test/test0.js lib/test/test2.js lib/test/test3.js lib/test/test4.js lib/backends/make.js lib/file.js lib/index.js lib/packs/livereload.js lib/packs/serve.js lib/packs/web.js lib/tree.js
+build: lib/suites/make4web.js lib/backends/make.js lib/file.js lib/index.js lib/packs/livereload.js lib/packs/serve.js lib/packs/web.js lib/tree.js tests/common/test0/test0.js
+
+.PHONY : cmd-9
+cmd-9: 
+	make build
+
+.PHONY : cmd-10
+cmd-10: 
+	cp ./lib/index.js .
+
+.PHONY : cmd-11
+cmd-11: 
+	chmod +x ./lib/packs/serve.js
 
 .PHONY : cmd-12
 cmd-12: 
-	make build
+	chmod +x ./lib/packs/livereload.js
 
 .PHONY : cmd-13
 cmd-13: 
-	cp ./lib/index.js .
-
-.PHONY : cmd-14
-cmd-14: 
-	chmod +x ./lib/packs/serve.js
-
-.PHONY : cmd-15
-cmd-15: 
-	chmod +x ./lib/packs/livereload.js
-
-.PHONY : cmd-16
-cmd-16: 
 	./tests/test.sh
 
-.PHONY : cmd-seq-17
-cmd-seq-17: 
+.PHONY : cmd-seq-14
+cmd-seq-14: 
+	make cmd-9
+	make cmd-10
+	make cmd-11
 	make cmd-12
 	make cmd-13
-	make cmd-14
-	make cmd-15
-	make cmd-16
 
 .PHONY : all
-all: cmd-seq-17
+all: cmd-seq-14
 
-.PHONY : clean-18
-clean-18: 
-	rm -rf .build/0-make4web.js .build/1-test0.js .build/2-test2.js .build/3-test3.js .build/4-test4.js .build/5-make.js .build/6-file.js .build/7-index.js .build/8-livereload.js .build/9-serve.js .build/10-web.js .build/11-tree.js lib/suites/make4web.js lib/test/test0.js lib/test/test2.js lib/test/test3.js lib/test/test4.js lib/backends/make.js lib/file.js lib/index.js lib/packs/livereload.js lib/packs/serve.js lib/packs/web.js lib/tree.js
+.PHONY : clean-15
+clean-15: 
+	rm -rf .build/0-make4web.js .build/1-make.js .build/2-file.js .build/3-index.js .build/4-livereload.js .build/5-serve.js .build/6-web.js .build/7-tree.js lib/suites/make4web.js lib/backends/make.js lib/file.js lib/index.js lib/packs/livereload.js lib/packs/serve.js lib/packs/web.js lib/tree.js .build/8-test0.js tests/common/test0/test0.js
 
-.PHONY : clean-19
-clean-19: 
+.PHONY : clean-16
+clean-16: 
 	rm -rf .build
 
-.PHONY : clean-20
-clean-20: 
+.PHONY : clean-17
+clean-17: 
 	mkdir -p .build
 
-.PHONY : cmd-seq-21
-cmd-seq-21: 
-	make clean-18
-	make clean-19
-	make clean-20
+.PHONY : cmd-seq-18
+cmd-seq-18: 
+	make clean-15
+	make clean-16
+	make clean-17
 
 .PHONY : clean
-clean: cmd-seq-21
+clean: cmd-seq-18
 
-.PHONY : cmd-22
-cmd-22: 
+.PHONY : cmd-19
+cmd-19: 
 	./node_modules/.bin/xyz --increment major
 
 .PHONY : release-major
-release-major: cmd-22
+release-major: cmd-19
 
-.PHONY : cmd-23
-cmd-23: 
+.PHONY : cmd-20
+cmd-20: 
 	./node_modules/.bin/xyz --increment minor
 
 .PHONY : release-minor
-release-minor: cmd-23
+release-minor: cmd-20
 
-.PHONY : cmd-24
-cmd-24: 
+.PHONY : cmd-21
+cmd-21: 
 	./node_modules/.bin/xyz --increment patch
 
 .PHONY : release-patch
-release-patch: cmd-24
+release-patch: cmd-21

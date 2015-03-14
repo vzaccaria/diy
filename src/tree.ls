@@ -216,18 +216,27 @@ class treeBuilder
                     else
                       "@echo 'Not cleaning up #{it.name} because is a source'"
 
-        clean = new phony("clean", [] , {
-            sequential: true
-            actions: removeProductCmds
-        })
+        targets = targets ++ dirs
 
-        update = new phony("update", [ 'clean '], {
-            sequential: true
-            actions: [
-              process.argv * ' '
-            ]
-        })
-        targets = targets ++ dirs ++ [ prepare, clean, update ]
+        if not (\clean in _.map(targets, (.name)))
+          clean = new phony("clean", [] , {
+              sequential: true
+              actions: removeProductCmds
+          })
+          targets = targets ++ [ clean ]
+
+        if not (\update in _.map(targets, (.name)))
+          update = new phony("update", [ 'clean '], {
+              sequential: true
+              actions: [
+                process.argv * ' '
+              ]
+          })
+          targets = targets ++ [ update ]
+
+        if not (\prepare in _.map(targets, (.name)))
+          targets = targets ++ [ prepare ]
+
         _.map targets, iTargetStore.addTarget
 
         return iTargetStore

@@ -10,11 +10,16 @@ parse ->
     @add-plugin "lsc", (g) ->
         @compile-files( (-> "lsc -b -p -c #{it.orig-complete} > #{it.build-target}" ) , ".js", g)
 
-    @collect "build", ->
+    @collect "build", -> [
             @toDir "./lib", { strip: "src" }, -> [
                 @es6 "src/**/*.js6"
                 @lsc "src/**/*.ls"
             ]
+
+            @toDir ".", -> [
+                @es6 "tests/common/**/*.js6"
+            ]
+    ]
 
     @collect "all", -> [
         @command-seq -> [

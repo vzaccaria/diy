@@ -27,4 +27,4 @@ if [ -d "$srcdir/common" ]; then
 			diff $f/output $f/reference
 		fi
 	done
-done
+fi

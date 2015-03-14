@@ -24,16 +24,16 @@ var injectTestDeps = (mod) => {
 }
 
 
-var file    = rewire(`../file`)
+var file    = rewire(`../../../lib/file`)
 injectTestDeps(file)
 
-var tree    = rewire(`../tree`)
+var tree    = rewire(`../../../lib/tree`)
 injectTestDeps(tree)
 
-var webPack = rewire(`../packs/web`)
+var webPack = rewire(`../../../lib/packs/web`)
 injectTestDeps(webPack)
 
-var make    = rewire(`../backends/make`)
+var make    = rewire(`../../../lib/backends/make`)
 injectTestDeps(make)
 
 
@@ -52,9 +52,25 @@ var f = parse(_ => {
             strip: 'src/'
         }, _ => {
             _.collect("build", _ => {
-                _.concat( _ => {
-                        _.copy("src/*.js6")
+                _.minify(_ => {
+                    _.livescript("src/*.ls", "src/packs/*.ls", "src/backends/*.ls")
+                    _.sixToFive("src/*.js6")
+                    _.concat(
+                      _ => {
+                            _.copy("src/*.js6")
+                    })
                 })
+
+            })
+        })
+
+        _.collect("update", _ => {
+          _.cmd("echo 'updated'")
+        })
+
+        _.toFile("./index.js", _ => {
+            _.minify(_ => {
+                _.livescript("src/index.ls")
             })
         })
     })

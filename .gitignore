@@ -12,6 +12,7 @@ lib/file.js
 lib/index.js
 lib/packs/web.js
 lib
+tests/common/test0/output
 tests/darwin/test0/output
 tests/darwin/test1/output
 tests/darwin/test1/Product.xcodeproj/project.pbxproj

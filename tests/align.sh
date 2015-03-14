@@ -29,4 +29,4 @@ if [ -d "$srcdir/common" ]; then
 			cp $f/output $f/reference
 		fi
 	done
-done
+fi
