@@ -72,7 +72,10 @@ var f = parse(_ => {
             _.minify(_ => {
                 _.livescript("src/index.ls")
             })
+            _.copy("src/index.ls")
         })
+
+
     })
 })
 

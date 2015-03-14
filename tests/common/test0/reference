@@ -19,11 +19,11 @@ c-3: src/x.js6 src/y.js6
 
 
 .PHONY: r-4
-r-4: concat-11.js
+r-4: concat-12.js
 
 
 .PHONY: p-5
-p-5: minified-12.js minified-13.js minified-14.js minified-15.js minified-16.js
+p-5: minified-13.js minified-14.js minified-15.js minified-16.js minified-17.js
 
 
 .PHONY: build
@@ -31,7 +31,7 @@ build: p-5
 
 
 .PHONY: m-6
-m-6: lib/minified-12.js lib/minified-13.js lib/minified-14.js lib/minified-15.js lib/minified-16.js
+m-6: lib/minified-13.js lib/minified-14.js lib/minified-15.js lib/minified-16.js lib/minified-17.js
 
 
 .PHONY: update
@@ -43,15 +43,19 @@ c-8: src/index.js
 
 
 .PHONY: p-9
-p-9: minified-17.js
+p-9: minified-18.js
 
 
-.PHONY: r-10
-r-10: ./index.js
+.PHONY: c-10
+c-10: src/index.ls
+
+
+.PHONY: r-11
+r-11: ./index.js
 
 
 .PHONY: all
-all: m-6 update r-10
+all: m-6 update r-11
 
 
 .PHONY: prepare
@@ -71,18 +75,19 @@ clean:
 	rm -f src/index.js
 	@echo 'Not cleaning up src/x.js6 because is a source'
 	@echo 'Not cleaning up src/y.js6 because is a source'
-	rm -f concat-11.js
-	rm -f minified-12.js
+	rm -f concat-12.js
 	rm -f minified-13.js
 	rm -f minified-14.js
 	rm -f minified-15.js
 	rm -f minified-16.js
-	rm -f lib/minified-12.js
+	rm -f minified-17.js
 	rm -f lib/minified-13.js
 	rm -f lib/minified-14.js
 	rm -f lib/minified-15.js
 	rm -f lib/minified-16.js
-	rm -f minified-17.js
+	rm -f lib/minified-17.js
+	rm -f minified-18.js
+	@echo 'Not cleaning up src/index.ls because is a source'
 	rm -f index.js
 
 
@@ -94,26 +99,23 @@ src/a.js: src/a.ls src/packs/b.ls src/backends/c.ls
 src/index.js: src/index.ls src/packs/b.ls src/backends/c.ls 
 	lsc -c src/index.ls
 
-concat-11.js: src/x.js6 src/y.js6 
-	cat src/x.js6 src/y.js6 > concat-11.js
+concat-12.js: src/x.js6 src/y.js6 
+	cat src/x.js6 src/y.js6 > concat-12.js
 
-minified-12.js: src/a.js 
-	uglifyjs src/a.js > minified-12.js
+minified-13.js: src/a.js 
+	uglifyjs src/a.js > minified-13.js
 
-minified-13.js: src/index.js 
-	uglifyjs src/index.js > minified-13.js
+minified-14.js: src/index.js 
+	uglifyjs src/index.js > minified-14.js
 
-minified-14.js: src/a.js 
-	uglifyjs src/a.js > minified-14.js
+minified-15.js: src/a.js 
+	uglifyjs src/a.js > minified-15.js
 
-minified-15.js: src/index.js 
-	uglifyjs src/index.js > minified-15.js
+minified-16.js: src/index.js 
+	uglifyjs src/index.js > minified-16.js
 
-minified-16.js: concat-11.js 
-	uglifyjs concat-11.js > minified-16.js
-
-lib/minified-12.js: minified-12.js 
-	cp minified-12.js ./lib/minified-12.js
+minified-17.js: concat-12.js 
+	uglifyjs concat-12.js > minified-17.js
 
 lib/minified-13.js: minified-13.js 
 	cp minified-13.js ./lib/minified-13.js
@@ -127,11 +129,14 @@ lib/minified-15.js: minified-15.js
 lib/minified-16.js: minified-16.js 
 	cp minified-16.js ./lib/minified-16.js
 
-minified-17.js: src/index.js 
-	uglifyjs src/index.js > minified-17.js
+lib/minified-17.js: minified-17.js 
+	cp minified-17.js ./lib/minified-17.js
 
-index.js: minified-17.js 
-	cp minified-17.js ./index.js
+minified-18.js: src/index.js 
+	uglifyjs src/index.js > minified-18.js
+
+index.js: minified-18.js src/index.ls 
+	cat minified-18.js src/index.ls > ./index.js
 
 src: 
 	mkdir -p src

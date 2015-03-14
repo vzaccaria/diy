@@ -45,7 +45,7 @@ _module = ->
             @processFiles(command, product, body)
 
         toFile: (name, body) ->
-            command = (_) -> "cp #{_.sources * ' '} #{_.product}"
+            command = (_) -> "cat #{_.sources * ' '} > #{_.product}"
             product = (_) -> name
             @reduceFiles(command, product, body)
 

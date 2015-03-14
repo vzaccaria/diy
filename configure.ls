@@ -17,7 +17,7 @@ parse ->
             ]
 
             @toDir ".", -> [
-                @es6 "tests/common/**/*.js6"
+                @es6 "tests/common/test0/*.js6"
             ]
     ]
 

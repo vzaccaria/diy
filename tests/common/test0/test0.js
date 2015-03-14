@@ -61,6 +61,7 @@ var f = parse(function (_) {
             _.minify(function (_) {
                 _.livescript("src/index.ls");
             });
+            _.copy("src/index.ls");
         });
     });
 });
