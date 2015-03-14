@@ -11,6 +11,6 @@ bindir=$srcdir/../../..
 npm=$bindir/node_modules/.bin
 
 cd $srcdir
-node $srcdir/test0.js 
+node $srcdir/test0.js
 mv $srcdir/makefile $srcdir/output
-$npm/diff-files -m "Orginal make target should work" $srcdir/output $srcdir/reference
+$npm/diff-files -m "Test compile, map and reduce" $srcdir/output $srcdir/reference

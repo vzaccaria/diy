@@ -45,7 +45,7 @@ var f = parse(function (_) {
             _.collect("build", function (_) {
                 _.minify(function (_) {
                     _.livescript("src/*.ls", "src/packs/*.ls", "src/backends/*.ls");
-                    _.sixToFive("src/*.js6");
+                    _.livescript("src/*.ls");
                     _.concat(function (_) {
                         _.copy("src/*.js6");
                     });

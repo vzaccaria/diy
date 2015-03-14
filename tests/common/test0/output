@@ -11,7 +11,7 @@ c-1: src/a.js src/index.js
 
 
 .PHONY: c-2
-c-2: src/x.js src/y.js
+c-2: src/a.js src/index.js
 
 
 .PHONY: c-3
@@ -69,8 +69,6 @@ k-7:
 clean:  
 	rm -f src/a.js
 	rm -f src/index.js
-	rm -f src/x.js
-	rm -f src/y.js
 	@echo 'Not cleaning up src/x.js6 because is a source'
 	@echo 'Not cleaning up src/y.js6 because is a source'
 	rm -f concat-11.js
@@ -96,12 +94,6 @@ src/a.js: src/a.ls src/packs/b.ls src/backends/c.ls
 src/index.js: src/index.ls src/packs/b.ls src/backends/c.ls 
 	lsc -c src/index.ls
 
-src/x.js: src/x.js6 
-	6to5 src/x.js6 -o src/x.js
-
-src/y.js: src/y.js6 
-	6to5 src/y.js6 -o src/y.js
-
 concat-11.js: src/x.js6 src/y.js6 
 	cat src/x.js6 src/y.js6 > concat-11.js
 
@@ -111,11 +103,11 @@ minified-12.js: src/a.js
 minified-13.js: src/index.js 
 	uglifyjs src/index.js > minified-13.js
 
-minified-14.js: src/x.js 
-	uglifyjs src/x.js > minified-14.js
+minified-14.js: src/a.js 
+	uglifyjs src/a.js > minified-14.js
 
-minified-15.js: src/y.js 
-	uglifyjs src/y.js > minified-15.js
+minified-15.js: src/index.js 
+	uglifyjs src/index.js > minified-15.js
 
 minified-16.js: concat-11.js 
 	uglifyjs concat-11.js > minified-16.js
