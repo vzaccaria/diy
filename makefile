@@ -86,55 +86,60 @@ cmd-12:
 cmd-13: 
 	./tests/test.sh
 
-.PHONY : cmd-seq-14
-cmd-seq-14: 
+.PHONY : cmd-14
+cmd-14: 
+	cat README.tpl.md | stupid-replace description -f description.md > README.md
+
+.PHONY : cmd-seq-15
+cmd-seq-15: 
 	make cmd-9
 	make cmd-10
 	make cmd-11
 	make cmd-12
 	make cmd-13
+	make cmd-14
 
 .PHONY : all
-all: cmd-seq-14
-
-.PHONY : clean-15
-clean-15: 
-	rm -rf .build/0-make4web.js .build/1-make.js .build/2-file.js .build/3-index.js .build/4-livereload.js .build/5-serve.js .build/6-web.js .build/7-tree.js lib/suites/make4web.js lib/backends/make.js lib/file.js lib/index.js lib/packs/livereload.js lib/packs/serve.js lib/packs/web.js lib/tree.js .build/8-test0.js tests/common/test0/test0.js
+all: cmd-seq-15
 
 .PHONY : clean-16
 clean-16: 
-	rm -rf .build
+	rm -rf .build/0-make4web.js .build/1-make.js .build/2-file.js .build/3-index.js .build/4-livereload.js .build/5-serve.js .build/6-web.js .build/7-tree.js lib/suites/make4web.js lib/backends/make.js lib/file.js lib/index.js lib/packs/livereload.js lib/packs/serve.js lib/packs/web.js lib/tree.js .build/8-test0.js tests/common/test0/test0.js
 
 .PHONY : clean-17
 clean-17: 
+	rm -rf .build
+
+.PHONY : clean-18
+clean-18: 
 	mkdir -p .build
 
-.PHONY : cmd-seq-18
-cmd-seq-18: 
-	make clean-15
+.PHONY : cmd-seq-19
+cmd-seq-19: 
 	make clean-16
 	make clean-17
+	make clean-18
 
 .PHONY : clean
-clean: cmd-seq-18
-
-.PHONY : cmd-19
-cmd-19: 
-	./node_modules/.bin/xyz --increment major
-
-.PHONY : release-major
-release-major: cmd-19
+clean: cmd-seq-19
 
 .PHONY : cmd-20
 cmd-20: 
-	./node_modules/.bin/xyz --increment minor
+	./node_modules/.bin/xyz --increment major
 
-.PHONY : release-minor
-release-minor: cmd-20
+.PHONY : release-major
+release-major: cmd-20
 
 .PHONY : cmd-21
 cmd-21: 
+	./node_modules/.bin/xyz --increment minor
+
+.PHONY : release-minor
+release-minor: cmd-21
+
+.PHONY : cmd-22
+cmd-22: 
 	./node_modules/.bin/xyz --increment patch
 
 .PHONY : release-patch
-release-patch: cmd-21
+release-patch: cmd-22

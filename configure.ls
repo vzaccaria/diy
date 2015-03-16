@@ -28,6 +28,7 @@ parse ->
             @cmd "chmod +x ./lib/packs/serve.js"
             @cmd "chmod +x ./lib/packs/livereload.js"
             @cmd "./tests/test.sh"
+            @cmd "cat README.tpl.md | stupid-replace description -f description.md > README.md"
         ]
     ]
 
