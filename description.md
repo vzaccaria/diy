@@ -17,7 +17,7 @@ concatenate and minify into a single `_site/client.js` file.  Here's how you'd w
 
 var {
   generateProject
-} = require("diy");
+} = require("diy-build");
 
 generateProject(_ => {
   _.collect("all", _ => {
