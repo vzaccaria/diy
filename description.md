@@ -8,7 +8,7 @@ npm install diy-build
 ## concatenate and minify javascript files
 
 Assume you have two files (`src/file1.js` and `src/file2.js`) that you want to
-concatenate and minify into a single `_site/client.js` file.  Here's how you'd write a Diy (ES6) program for the task at hand:
+concatenate and minify into a single `_site/client.js` file.  Here's how you'd write a DIY (ES6) program for the task at hand:
 
 ## diy source file
 
@@ -34,7 +34,7 @@ generateProject(_ => {
 
 ## description
 
-Diy uses a **top-down** approach in which you decompose the construction of each product/target into simpler steps.
+DIY uses a **top-down** approach in which you decompose the construction of each product/target into simpler steps.
 
 Everything begins with the `generateProject` library function. This function
 generates the makefile by following the steps indicated in the closure passed as a parameter.
