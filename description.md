@@ -34,10 +34,10 @@ generateProject(_ => {
 
 ## description
 
-Diy uses a **top-down** approach where you decompose the construction of each product/target into simpler steps.
+Diy uses a **top-down** approach in which you decompose the construction of each product/target into simpler steps.
 
-Everything starts with the `generateProject` library function. This function
-generates the makefile by following the steps indicated in the closure passed as parameter.
+Everything begins with the `generateProject` library function. This function
+generates the makefile by following the steps indicated in the closure passed as a parameter.
 
 ```js
 generateProject(_ => {
@@ -45,10 +45,10 @@ generateProject(_ => {
     ...
 ```
 
-In fact, this is like saying: "Hey, my project is composed by a single set of files collectively
-called `all`". Indeed, the target "all" will be among the available targets in the generated makefile.
+This will declare a new Make target (`all`) associated with the construction of
+a set of products specified in the closure passed to `collect` (think of it as a Grunt task).
 
-You could even have a sequence of `_.collect`, declaring multiple targets, or even one target nested inside another (to specify nested dependencies):
+You could even have a sequence of `_.collect` to declare multiple targets or even multiple targets nested inside another (to specify nested dependencies):
 
 
 ```js
@@ -64,7 +64,7 @@ generateProject(_ => {
 })
 ```
 
-But let's go back to our example. The `_.collect` operation specifies what are the files that must be created:
+Let's go back to our example. The `_.collect` operation specifies the files that must be built:
 
 ```js
 _.collect("all", _ => {
@@ -72,8 +72,8 @@ _.collect("all", _ => {
     ...
 ```
 
-This is like saying: "Look, when I say `make all`, I really want to build the file "\_site/client.js".
-`_.toFile` instructs make to create a named file whose contents are generated in the nested closure:
+Here, we are specifying that the `all` target corresponds to the construction of the file `_site/client.js`. In this case,
+`_.toFile` receives a closure that constructs the minified concatenation of all `src/*.js`:
 
 ```js
 _.toFile( "_site/client.js", _ => {
@@ -83,14 +83,12 @@ _.toFile( "_site/client.js", _ => {
       ...
 ```
 
-Thus the minified concatenation of all `src/*.js` is copied into "_site/client.js".
-
 **Check out the [docs for additional ways to process files](docs/index.html)**
 
 ## makefile generation
 
 
-To generate the makefile we use babel to get ES5:
+To generate the makefile we use `babel` to get ES5:
 
 ```bash
 babel configure.js | node
@@ -98,7 +96,7 @@ babel configure.js | node
 
 And here's the [generated makefile](demo/makefile).
 
-The makefile comes with two default targets (`prepare` and `clean`) plus all the targets defined with `collect`:
+The makefile comes with two default targets (`prepare` and `clean`) and all the targets defined with `collect`:
 
 ```bash
 > make prepare      # Creates destination directories
@@ -116,10 +114,10 @@ Make provides a way to specify the maximum parallelism to be used for building t
 
 # customization
 
-What about your favorite css/js preprocessor and other minifiers?
+What about your favorite CSS/JS preprocessor and other minifiers?
 
-Here's how you would define a new processing step to compile javascript with a
-bunch of browserify plugins:
+Here's how you would define a new processing step to compile Javascript with a
+bunch of Browserify plugins:
 
 ```js
 _.browserify = (src, ...deps) => {
@@ -129,11 +127,11 @@ _.browserify = (src, ...deps) => {
 }
 ```
 
-`_.compileFiles` is a built in function to easily construct new processing steps. Its first
+`_.compileFiles` is a built-in function that allows you to easily construct new processing steps. Its first
 two parameters are two templates:
 
-1. a function to build the command line
-2. a function to build the product name
+1. A function to build the command line; and
+2. A function to build the product name.
 
 The remaining parameters are `src` (glob for the source files) and the source dependencies.
 
@@ -156,8 +154,8 @@ generateProject(_ => {
 
 # serving and livereloading
 
-Serving static files from a directory and livereloading upon a change of a product is supported through `pm2` and `tiny-lr`. We can
-create two make targets (`start` and `stop`) that take care of starting and stopping both services:
+Serving static files from a directory and livereloading upon a change of a product are supported through `pm2` and `tiny-lr`. We can
+create two make targets (`start` and `stop`) that start and stop both services:
 
 ```js
 generateProject(_ => {
@@ -178,5 +176,5 @@ generateProject(_ => {
 })
 ```
 
-`_.startWatch(glob)` is a built-in step that launches a tiny-lr instance that triggers a reload upon change on files matching the glob.
+`_.startWatch(glob)` is a built-in step that launches a tiny-lr instance to trigger a reload upon a change in files matching the glob.
 `_.startServe(root,port)` serves files from the specified root and port.
