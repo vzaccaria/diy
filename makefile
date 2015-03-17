@@ -88,7 +88,7 @@ cmd-13:
 
 .PHONY : cmd-14
 cmd-14: 
-	cat README.tpl.md | stupid-replace description -f description.md > README.md
+	cat README.tpl.md | stupid-replace '{{description}}' -f description.md > README.md
 
 .PHONY : cmd-seq-15
 cmd-seq-15: 

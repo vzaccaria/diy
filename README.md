@@ -2,7 +2,7 @@
 
 > do it yourself - build DSL
 
-{{# install
+# install
 
 ```shell
 npm install diy-build
@@ -184,7 +184,7 @@ generateProject(_ => {
 
 `_.startWatch(glob)` is a built-in step that launches a tiny-lr instance that triggers a reload upon change on files matching the glob.
 `_.startServe(root,port)` serves files from the specified root and port.
-}}
+
 
 
 ## Author
