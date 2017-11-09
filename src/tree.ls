@@ -129,7 +129,6 @@ class treeBuilder
         @curNode.addChild(tree.parse({type: "command", targetName: "k-#{uid(8)}", cmd: comm, deps: deps }))
 
     compileFiles: (cmd, product, src) ~>
-        src = src
         deps = &[3 to ]
         deps ?= []
         debug "deps: #{JSON.stringify(deps)}"

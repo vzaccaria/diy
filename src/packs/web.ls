@@ -44,6 +44,12 @@ _module = ->
             product = (_) -> "minified-#{uid(4)}.js"
             @processFiles(command, product, body)
 
+        cmdStdOut: (cmdf, body) ->
+            command = (_) -> "#{cmdf(_.source)} > #{_.product}"
+            product = (_) -> "cmd-#{uid(4)}"
+            args = [ command, product ] ++ &[1 to ]
+            @processFiles(command, product, body)
+
         toFile: (name, body) ->
             command = (_) -> "cat #{_.sources * ' '} > #{_.product}"
             product = (_) -> name

@@ -24,7 +24,6 @@ class phony extends target
 class product extends target
     (@name, @productOf, @command, @deps) ~>
         debug("Created product #{@name}")
-        assert(@productOf)
         assert(@command)
         super(@name, @deps)
 
